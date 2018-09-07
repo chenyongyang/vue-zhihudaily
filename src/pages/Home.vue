@@ -1,15 +1,16 @@
 <template>
-    <div class="home">
-        home
-    </div>
+  <div class="home-page">
+    <Header></Header>
+    <Swiper></Swiper>
+  </div>
 </template>
-
-<script>
+ <script>
 export default {
-
-}
+  components: {
+    Header: () => import("@/components/Header"),
+    Swiper: () => import("@/components/Swiper")
+  }
+};
 </script>
-
-<style>
-
+<style lang="scss" scoped>
 </style>
