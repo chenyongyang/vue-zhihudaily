@@ -64,14 +64,18 @@ export default {
     this.getNewsLatest().then((res) => {
       this.$nextTick(() => {
         if (!this.scroll) {
-          this.scroll = new betterScroll(this.$refs.wrapper, {})
-          this.scroll.on('scrollEnd', pos => {
-            if (this.scroll.y <= (this.scroll.maxScrollY + 30)) {
-              this.getBefore()
+          this.scroll = new betterScroll(this.$refs.wrapper, {
+            pullUpLoad: {
+              threshhold: 30
             }
           })
+          this.scroll.on('pullingUp', (pos) => {
+            this.getBefore().then(() => {
+              this.scroll.finishPullUp()
+            })
+          })
         } else {
-          this.scroll.refresh()
+          this.scroll.refresh();
         }
       })
       // this.getBefore()

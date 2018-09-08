@@ -1,9 +1,9 @@
 <template>
     <swiper class="swiper" :options="swiperOption" v-if="topStories.length > 0">
         <swiper-slide class="slide" v-for="(story, index) in topStories" :key="index">
-        <img class="img" v-lazy="image403(story.image)" alt="">
-        <div class="mask"></div>
-        <span class="title">{{story.title}}</span>
+          <img class="img" v-lazy="image403(story.image)" alt="">
+          <div class="mask"></div>
+          <span class="title">{{story.title}}</span>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -16,15 +16,20 @@ import image403 from '@/utils/image403'
 // import axios from 'axios'
 export default {
   data () {
+    let _this = this;
     return {
       swiperOption: {
-        direction: 'horizontal',
         loop: true,
         autoplay: {
           disableOnInteraction: false
         },
         pagination: {
           el: '.swiper-pagination'
+        },
+        on: {
+          tap: function () {
+            _this.$router.push({ name: 'NewsDetail', params: { id: _this.topStories[this.clickedIndex].id } })
+          }
         }
       },
     //   topStories: [] // 轮播图数据
@@ -45,7 +50,10 @@ export default {
   //   })
   // },
   methods: {
-    image403
+    image403,
+    toNewsDetail (id) {
+      this.$router.push({ path: `newsDetail/${id}` });
+    }
   }
 }
 </script>

@@ -9,5 +9,10 @@ export default new Router({
         name: 'Home',
         component: () =>
             import ('@/pages/Home')
+    }, {
+        path: '/newsDetail/:id',
+        name: 'NewsDetail',
+        component: () =>
+            import ('@/pages/NewsDetail')
     }]
 })
