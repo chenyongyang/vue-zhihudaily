@@ -1,18 +1,26 @@
 <template>
-  <div class="home-page">
-    <Header></Header>
-    <Swiper></Swiper>
-    <div class="today-hot">
-      <h3 class="title">今日要闻</h3>
-      <news-item class="item" v-for="(story, index) in todayHotStories" :key="index" :story="story"></news-item>
+  <div class="home-page" ref="wrapper">
+    <div>
+      <Header></Header>
+      <Swiper></Swiper>
+      <div class="today-hot">
+        <h3 class="title">今日要闻</h3>
+        <news-item class="item" v-for="(story, index) in todayHotStories" :key="index" :story="story"></news-item>
+      </div>
+      <div class="news-before" v-for="(item, outIndex) in beforeStories" :key="outIndex">
+        <h3 class="title">{{item.date}}</h3>
+        <news-item class="item" v-for="(story, innerIndex) in item.stories" :key="innerIndex" :story="story"></news-item>
+      </div>
     </div>
   </div>
 </template>
  <script>
  import { mapState, mapActions } from 'vuex'
+ import betterScroll from 'better-scroll'
+
 export default {
   computed:{
-    ...mapState(['todayHotStories'])
+    ...mapState(['todayHotStories','beforeStories'])
   },
   components: {
     Header: () => import("@/components/Header"),
@@ -20,10 +28,24 @@ export default {
     NewsItem: () => import('@/components/NewsItem')
   },
   methods:{
-    ...mapActions(['getNewsLatest'])
+    ...mapActions(['getNewsLatest', 'getBefore'])
   },
-  mounted(){
-    this.getNewsLatest();
+  created(){
+    this.getNewsLatest().then((res) => {
+      this.$nextTick(() => {
+        if (!this.scroll) {
+          this.scroll = new betterScroll(this.$refs.wrapper, {})
+          this.scroll.on('scrollEnd', pos => {
+            if (this.scroll.y <= (this.scroll.maxScrollY + 100)) {
+              this.getBefore()
+            }
+          })
+        } else {
+          this.scroll.refresh()
+        }
+      })
+      // this.getBefore()
+    })
   }
 };
 </script>
@@ -32,7 +54,7 @@ export default {
   height: 100%;
   background: #f3f3f3;
   overflow: scroll;
-  .today-hot {
+  .today-hot, .news-before{
     padding-top: 35px;
     .title {
       font-size: 28px;

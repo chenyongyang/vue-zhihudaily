@@ -8,7 +8,10 @@ import 'lib-flexible' // 需要配套px2rem-loader解析
 import '@/styles/common.scss'
 
 import VueLazyload from 'vue-lazyload'
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+    error: './static/error.png',
+    loading: './static/loading.png'
+})
 
 new Vue({
     el: '#app',
