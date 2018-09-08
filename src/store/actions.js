@@ -12,7 +12,6 @@ export default {
     },
     getBefore({ state, commit }) { // 解构store实例中的state属性和commit方法
         let date = ''
-            // 如果没有数据，则使用全局的date日期
         if (state.beforeStories.length === 0) {
             date = state.date
         } else {

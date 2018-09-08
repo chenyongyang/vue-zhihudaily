@@ -28,7 +28,7 @@ export default {
         },
         on: {
           tap: function () {
-            _this.$router.push({ name: 'NewsDetail', params: { id: _this.topStories[this.clickedIndex].id } })
+            _this.$router.push({ name: 'NewsDetail', params: { id: _this.topStories[this.clickedIndex - 1].id } })
           }
         }
       },
