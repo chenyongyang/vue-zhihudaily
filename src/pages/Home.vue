@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
+    <Header @toggle-menu="toggleMenu" class="header"></Header>
     <div ref="wrapper" class="wrapper">
-      <div>
-        <Header @toggle-menu="toggleMenu"></Header>
+      <div class="content">
         <Swiper></Swiper>
         <div class="today-hot">
           <h3 class="title">今日要闻</h3>
@@ -139,8 +139,18 @@ export default {
   height: 100%;
   background: #f3f3f3;
   overflow: scroll;
+  .header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
   .wrapper {
     height: 100%;
+    .content {
+      padding-top: 112px;
+    }
   }
   .today-hot, .news-before{
     padding-top: 35px;
@@ -162,12 +172,12 @@ export default {
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 2;
     .sidebar {
       position: absolute;
       left: 0;
       top: 0;
-      z-index: 2;
+      z-index: 3;
     }
   }
   .fade-enter-active, .fade-leave-active {
