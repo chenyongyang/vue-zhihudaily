@@ -18,6 +18,8 @@
 <script>
 import starImg from '@/assets/img/star.png'
 import downloadImg from '@/assets/img/download.png'
+// 要区分图片或字体资源在模板和js中的使用方式
+// 模板中可以使用相对路径；js中要以模块的形式导入才能使用
 export default {
   data () {
     return {
