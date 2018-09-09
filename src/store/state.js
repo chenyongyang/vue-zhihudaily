@@ -2,5 +2,6 @@ export default {
     topStories: [],
     todayHotStories: [],
     date: '',
-    beforeStories: []
+    beforeStories: [],
+    themes: []
 }
