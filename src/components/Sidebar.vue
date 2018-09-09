@@ -2,7 +2,7 @@
   <div class="sidebar" @click.stop.prevent>
     <!-- 将侧边栏和遮罩层的点击事件分隔开 -->
     <div class="header">
-		<div>
+		<div class="user">
 			<img class="avatar" src="@/assets/img/default_avatar.png" alt="">
 			<span class="name">请登录</span>
 		</div>
@@ -37,19 +37,47 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sidebar {
-    background: #fff;
-    width: 600px;
-    height: 100%;
-    .header {
-        height: 200px;
-        background: #00a2ed;
-		font-size: 36px;
+  background: #fff;
+  width: 634px;
+  height: 100%;
+  font-size: 34px;
+  .header {
+    height: 150px;
+    background: #00a2ed;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .user {
+      height: 110px;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      .avatar {
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        margin-right: 26px;
+      }
     }
-	.content{
-		.item{
+	}
+	.content {
+		.item {
+			height: 100px;
 			width: 100%;
+			margin-bottom: 10px;
 			background: #eee;
-			border: 1px solid blue;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			img {
+				width: 40px;
+				margin-right: 40px;
+			}
+			span {
+				font-weight: bold;
+				font-size: 36px;
+			}
 		}
 	}
 }
