@@ -103,6 +103,10 @@ export default {
               }
             });
 
+            /*
+              下拉刷新和加载更多的原理相同
+              判断距离、监听事件、异步取值、更新视图
+            */
             this.scroll.on('touchEnd', (pos) => {
               if (pos.y > 30) {
                 this.CLEARSTORIES();
