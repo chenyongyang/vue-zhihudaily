@@ -17,9 +17,10 @@
 			<img src="@/assets/img/homePage.png" alt="">
 			<span>首页</span>
     </div>
-		<div v-for="(theme,index) in themes" :key="index">
-			<span>{{ theme.name }}</span>
-		</div>
+	  <div class="themes" v-for="(theme, index) in themes" :key="index">
+      <span>{{theme.name}}</span>
+      <img src="@/assets/img/plus.png" alt="">
+    </div>
   </div>
 </template>
 <script>
@@ -45,7 +46,6 @@ export default {
 	},
 	created(){
 		this.getThemes();
-		console.log(this.themes)
 	},
 	computed: {
 		...mapState(['themes'])
@@ -61,6 +61,7 @@ export default {
   width: 634px;
   height: 100%;
   font-size: 34px;
+	overflow: scroll;
   .header {
     height: 228px;
     background: #00a2ed;
@@ -113,6 +114,17 @@ export default {
     }
     span {
       color: #00a2ed;
+    }
+  }
+	.themes {
+    height: 104px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 112px 0 39px;
+    img {
+      width: 28px;
+      height: 28px;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
-  <div class="home-page" ref="wrapper">
-    <div ref="wrapper">
+  <div class="home-page">
+    <div ref="wrapper" class="wrapper">
       <div>
         <Header @toggle-menu="toggleMenu"></Header>
         <Swiper></Swiper>
@@ -26,11 +26,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import betterScroll from 'better-scroll'
 import moment from 'moment'
 
 export default {
+  created(){
+    this.loadData(); // 钩子函数内不要包含太多的业务逻辑，尽可能封装成方法
+  },
   data(){
     return {
       isSidebarShow: false
@@ -50,7 +53,8 @@ export default {
       this.isSidebarShow = !this.isSidebarShow;
     },
     ...mapActions(['getNewsLatest', 'getBefore']),
-    dataFormat(date){
+    ...mapMutations(['CLEARSTORIES']),
+    dateFormat(date){
         let day = ''
         switch (moment(date).format('e')) {
           case '0':
@@ -78,28 +82,51 @@ export default {
             break;
         }
         return moment(date).format('MM月DD日') + ' 星期' + day;
-      }
-  },
-  created(){
-    this.getNewsLatest().then((res) => {
-      this.$nextTick(() => {
-        if (!this.scroll) {
-          this.scroll = new betterScroll(this.$refs.wrapper, {
-            pullUpLoad: {
-              threshhold: 30
-            },
-            click: true
-          })
-          this.scroll.on('pullingUp', (pos) => {
-            this.getBefore().then(() => {
-              this.scroll.finishPullUp()
-            })
-          })
-        } else {
-          this.scroll.refresh();
-        }
-      });
-    })
+      },
+    loadData () {
+      if (!this.scroll) {
+        this.getNewsLatest().then(res => {
+
+          this.$nextTick(() => {
+
+            this.scroll = new betterScroll(this.$refs.wrapper, {
+              click: true
+            });
+
+            this.scroll.on('scrollEnd', (pos) => {
+              if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+                this.getBefore().then(res => {
+                  this.$nextTick(() => {
+                    this.scroll.refresh()
+                  });
+                });
+              }
+            });
+
+            this.scroll.on('touchEnd', (pos) => {
+              if (pos.y > 30) {
+                this.CLEARSTORIES();
+                this.getNewsLatest().then(() => {
+                  this.$nextTick(() => {
+                    this.scroll.refresh()
+                  })
+                })
+              }
+            });
+
+          });
+        })
+      } 
+      // else 
+      // {
+      //   console.log(1)
+      //   this.getBefore().then(res => {
+      //     this.$nextTick(() => {
+      //       this.scroll.refresh();
+      //     })
+      //   })
+      // }
+    }
   }
 };
 </script>
@@ -108,6 +135,9 @@ export default {
   height: 100%;
   background: #f3f3f3;
   overflow: scroll;
+  .wrapper {
+    height: 100%;
+  }
   .today-hot, .news-before{
     padding-top: 35px;
     .title {

@@ -15,5 +15,8 @@ export default {
     },
     ADDSTORIES(state, data) {
         state.beforeStories.push(data)
+    },
+    CLEARSTORIES(state) {
+        state.beforeStories = []
     }
 }
