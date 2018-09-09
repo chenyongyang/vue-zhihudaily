@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="left">
-      <img class="menu" src="@/assets/img/menu.png" alt="">
+      <img class="menu" src="@/assets/img/menu.png" alt="" @click="toggleMenu">
       <span class="title">首页</span>
     </div>
     <div class="right">
@@ -12,7 +12,11 @@
 </template>
 <script>
 export default {
-
+  methods: {
+    toggleMenu(){
+      this.$emit('toggle-menu');
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

@@ -1,34 +1,54 @@
 <template>
   <div class="home-page" ref="wrapper">
-    <div>
-      <Header></Header>
-      <Swiper></Swiper>
-      <div class="today-hot">
-        <h3 class="title">今日要闻</h3>
-        <news-item class="item" v-for="(story, index) in todayHotStories" :key="index" :story="story"></news-item>
-      </div>
-      <div class="news-before" v-for="(item, outIndex) in beforeStories" :key="outIndex">
-        <h3 class="title">{{ dataFormat(item.date) }}</h3>
-        <news-item class="item" v-for="(story, innerIndex) in item.stories" :key="innerIndex" :story="story"></news-item>
+    <div ref="wrapper">
+      <div>
+        <Header @toggle-menu="toggleMenu"></Header>
+        <Swiper></Swiper>
+        <div class="today-hot">
+          <h3 class="title">今日要闻</h3>
+          <news-item class="item" v-for="(story, index) in todayHotStories" :key="index" :story="story"></news-item>
+        </div>
+        <div class="news-before" v-for="(item, outIndex) in beforeStories" :key="outIndex">
+          <h3 class="title">{{dateFormat(item.date)}}</h3>
+          <news-item class="item" v-for="(story, innerIndx) in item.stories" :key="innerIndx" :story="story"></news-item>
+        </div>
       </div>
     </div>
+    <transition name="fade">
+      <div class="mask" v-show="isSidebarShow" @click="toggleMenu">
+        <transition name="slide">
+          <Sidebar class="sidebar" v-show="isSidebarShow"></Sidebar>
+        </transition>
+      </div>
+    </transition>
+
   </div>
 </template>
+
 <script>
 import { mapState, mapActions } from 'vuex'
 import betterScroll from 'better-scroll'
 import moment from 'moment'
 
 export default {
+  data(){
+    return {
+      isSidebarShow: false
+    }
+  },
   computed:{
     ...mapState(['todayHotStories','beforeStories'])
   },
   components: {
     Header: () => import("@/components/Header"),
     Swiper: () => import("@/components/Swiper"),
-    NewsItem: () => import('@/components/NewsItem')
+    NewsItem: () => import('@/components/NewsItem'),
+    Sidebar: () => import('@/components/Sidebar')
   },
   methods:{
+    toggleMenu(){
+      this.isSidebarShow = !this.isSidebarShow;
+    },
     ...mapActions(['getNewsLatest', 'getBefore']),
     dataFormat(date){
         let day = ''
@@ -67,7 +87,8 @@ export default {
           this.scroll = new betterScroll(this.$refs.wrapper, {
             pullUpLoad: {
               threshhold: 30
-            }
+            },
+            click: true
           })
           this.scroll.on('pullingUp', (pos) => {
             this.getBefore().then(() => {
@@ -77,8 +98,7 @@ export default {
         } else {
           this.scroll.refresh();
         }
-      })
-      // this.getBefore()
+      });
     })
   }
 };
@@ -100,6 +120,33 @@ export default {
     .item {
       margin: 0 auto 17px;
     }
+  }
+  .mask {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    .sidebar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 2;
+    }
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: all 0.5s;
+  }
+  .fade-enter, .fade-leave-to {
+    background: rgba(0, 0, 0, 0);
+  }
+  .slide-enter-active, .slide-leave-active {
+    transition: all 0.5s;
+  }
+  .slide-enter, .slide-leave-to {
+    transform: translateX(-100%);
   }
 }
 </style>
