@@ -21,7 +21,7 @@ import axios from 'axios'
 import image403 from '@/utils/image403'
 export default {
 	created() {
-		this.getNews();
+    this.getNews();
 	},
   data() {
     return {
