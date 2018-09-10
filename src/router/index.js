@@ -20,6 +20,12 @@ export default new Router({
             name: 'Comment',
             component: () =>
                 import ('@/pages/Comment')
+        },
+        {
+            path: '/theme/:id',
+            name: 'ThemeContent',
+            component: () =>
+                import ('@/pages/ThemeContent')
         }
     ]
 })

@@ -4,6 +4,9 @@ export default {
     SETTHEMES(state, data) {
         state.themes = data
     },
+    SETTHEME(state, data) {
+        state.themeContent = data;
+    },
     SETTOPSTORIES(state, data) {
         state.topStories = data
     },

@@ -1,22 +1,21 @@
 <template>
   <div class="header">
     <div class="left">
-      <img class="menu" src="@/assets/img/menu.png" alt="" @click="toggleMenu">
-      <slot name="title"></slot>
-    </div>
-    <div class="right">
-      <slot name="bell"></slot>
-      <slot name="right-icon"></slot>
+        <img class="back" src="@/assets/img/back.png" alt="" @click="back">
+        <span>{{ themeName }}</span>
     </div>
   </div>
 </template>
 <script>
 export default {
-  methods: {
-    toggleMenu(){
-      this.$emit('toggle-menu');
+    props: {
+        themeName: String
+    },
+    methods: {
+        back(){
+            this.$router.go(-1);
+        }
     }
-  }
 }
 </script>
 <style lang="scss" scoped>
@@ -32,14 +31,12 @@ export default {
     width: 40px;
     height: 40px;
   }
-  .left, .right {
+  .left{
     display: flex;
     align-items: center;
-  }
-  .left {
-    .menu {
-      margin: 0 70px 0 40px;
+    .back {
+        margin: 0 70px 0 40px;
     }
-  }
+	}
 }
 </style>

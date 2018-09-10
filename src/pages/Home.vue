@@ -1,15 +1,23 @@
 <template>
   <div class="home-page">
-    <Header @toggle-menu="toggleMenu" class="header"></Header>
+    <Header @toggle-menu="toggleMenu" class="header">
+      <span slot="title">首页</span>
+      <img slot="bell" src="@/assets/img/bell.png" alt="">
+      <img slot="right-icon" class="more" src="@/assets/img/more.png" alt="">
+    </Header>
     <div ref="wrapper" class="wrapper">
       <div class="content">
         <Swiper></Swiper>
         <div class="today-hot">
-          <h3 class="title">今日要闻</h3>
+          <div class="title">
+            <span>今日要闻</span>
+          </div>
           <news-item class="item" v-for="(story, index) in todayHotStories" :key="index" :story="story"></news-item>
         </div>
         <div class="news-before" v-for="(item, outIndex) in beforeStories" :key="outIndex">
-          <h3 class="title">{{dateFormat(item.date)}}</h3>
+          <div class="title">
+            <span>{{dateFormat(item.date)}}</span>
+          </div>
           <news-item class="item" v-for="(story, innerIndx) in item.stories" :key="innerIndx" :story="story"></news-item>
         </div>
       </div>
@@ -178,6 +186,9 @@ export default {
       left: 0;
       top: 0;
       z-index: 3;
+      .more {
+        margin: 0 30px 0 50px;
+      }
     }
   }
   .fade-enter-active, .fade-leave-active {

@@ -5,7 +5,7 @@
 		<detail-header :story-id="story.id" v-if="completed"></detail-header>
     <!-- 这里的v-if就是为了确保父组件异步取值操作完成之后，再渲染子组件，也可以v-if="story.id" -->
     <div class="container">
-      <div class="top">
+      <div class="top" v-if="story.image">
         <img class="img" :src="image403(story.image)" alt="">
         <div class="mask"></div>
         <span class="title">{{story.title}}</span>

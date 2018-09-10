@@ -3,7 +3,7 @@
     <!-- 将侧边栏和遮罩层的点击事件分隔开 -->
     <div class="header">
 			<div class="user">
-				<img class="avatar" src="@/assets/img/default_avatar.png" alt="">
+				<img class="avatar" :src="image403('http://pic1.zhimg.com/da8e974dc_m.jpg')" alt="">
 				<span class="name">请登录</span>
 			</div>
 			<div class="content">
@@ -17,7 +17,7 @@
 			<img src="@/assets/img/homePage.png" alt="">
 			<span>首页</span>
     </div>
-	  <div class="themes" v-for="(theme, index) in themes" :key="index">
+	  <div class="themes" v-for="(theme, index) in themes" :key="index" @click="toThemePage(theme.id)">
       <span>{{theme.name}}</span>
       <img src="@/assets/img/plus.png" alt="">
     </div>
@@ -26,6 +26,7 @@
 <script>
 import starImg from '@/assets/img/star.png'
 import downloadImg from '@/assets/img/download.png'
+import image403 from '@/utils/image403'
 // 要区分图片或字体资源在模板和js中的使用方式
 // 模板中可以使用相对路径；js中要以模块的形式导入才能使用
 import { mapActions,mapState } from 'vuex'
@@ -45,13 +46,22 @@ export default {
     }
 	},
 	created(){
-		this.getThemes();
+    this.getThemes();
 	},
 	computed: {
 		...mapState(['themes'])
 	},
 	methods: {
-		...mapActions(['getThemes'])
+    image403,
+    ...mapActions(['getThemes']),
+    toThemePage(id){
+      this.$router.push({
+        name: 'ThemeContent',
+        params: {
+          id
+        }
+      });
+    }
 	}
 }
 </script>

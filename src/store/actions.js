@@ -5,6 +5,14 @@ export default {
             if (res.status === 200) {
                 commit('SETTHEMES', res.data.others);
             }
+        });
+    },
+    getThemeContent({ commit }, themeId) {
+        return axios.get('/api/4/theme/' + themeId).then((res) => {
+            if (res.status === 200) {
+                commit('SETTHEME', res.data);
+                console.log(res.data)
+            }
         })
     },
     getNewsLatest({ commit }) { // 解构store实例中的commit方法
@@ -15,7 +23,7 @@ export default {
                 commit('SETTODAYHOTSTORIES', res.data.stories)
                 commit('SETDATE', res.data.date)
             }
-        })
+        });
     },
     getBefore({ state, commit }) { // 解构store实例中的state属性和commit方法
         let date = ''
@@ -29,6 +37,6 @@ export default {
             if (res.status === 200) {
                 commit('ADDSTORIES', res.data)
             }
-        })
+        });
     }
 }

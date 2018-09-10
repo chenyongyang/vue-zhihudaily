@@ -3,5 +3,6 @@ export default {
     todayHotStories: [],
     date: '',
     beforeStories: [],
-    themes: []
+    themes: [],
+    themeContent: {}
 }
