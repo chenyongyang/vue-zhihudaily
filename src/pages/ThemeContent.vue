@@ -9,7 +9,7 @@
             <span class="editBy">主编</span>
             <img class="editor-avatar" :src="image403(editor.avatar)" alt="" v-for="(editor, index) in themeContent.editors" :key="index">
         </div>
-        <news-item class="item" v-for="(story, innerIndx) in themeContent.stories" :key="innerIndx" :story="story" @click-to="toNewsDetail(story.id)"></news-item>
+        <news-item class="item" v-for="(story, innerIndx) in themeContent.stories" :key="innerIndx" :story="story"></news-item>
     </div>
 </template>
 
@@ -21,7 +21,15 @@ import ThemeHeader from '@/components/ThemeHeader'
 import Sidebar from '@/components/Sidebar'
 export default {
     created(){
-        this.getThemeContent(this.$route.params.id);
+        this.getThemeContent(this.$route.params.themeid);
+    },
+    watch: {
+        '$route'(to,from){
+            if(this.$route.params.themeid){
+                console.log('路由改变了')
+                this.getThemeContent(this.$route.params.themeid);
+            }
+        }
     },
     computed:{
         ...mapState(['themeContent'])

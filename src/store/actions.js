@@ -11,7 +11,6 @@ export default {
         return axios.get('/api/4/theme/' + themeId).then((res) => {
             if (res.status === 200) {
                 commit('SETTHEME', res.data);
-                console.log(res.data)
             }
         })
     },

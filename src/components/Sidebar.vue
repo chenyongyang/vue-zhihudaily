@@ -54,11 +54,11 @@ export default {
 	methods: {
     image403,
     ...mapActions(['getThemes']),
-    toThemePage(id){
+    toThemePage(themeid){
       this.$router.push({
         name: 'ThemeContent',
         params: {
-          id
+          themeid
         }
       });
     }

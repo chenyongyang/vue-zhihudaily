@@ -22,7 +22,7 @@ export default new Router({
                 import ('@/pages/Comment')
         },
         {
-            path: '/theme/:id',
+            path: '/theme/:themeid',
             name: 'ThemeContent',
             component: () =>
                 import ('@/pages/ThemeContent')
